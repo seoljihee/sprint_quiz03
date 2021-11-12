@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+   <mapper namespace="com.care.root.mybatis.member.MemberMapper">
+   
+   <!-- select는 mapping작업을 반드시 해줘야 한다. -->
+   <resultMap id="member" type="com.care.root.member.dto.MemberDTO" >
+   	<!-- primary key는 id를 사용한다. -->
+   	<id property="id" column="id"/>
+   	<result property="pwd" column="pwd"/>
+   	<result property="name" column="name"/>
+   	<result property="addr" column="addr"/>
+   	<result property="limitTime" column="limit_Time"/>
+   	<result property="sessionId" column="session_id"/>
+   	
+   </resultMap>
+   
+   <!-- resultMap은 위에 작성한 type의 MemberDTO타입으로 사용하겠다는 의미이다.
+   		그래서 mapper쪽에서 
+    -->
+  <select id="getMember" resultMap="member">
+  	select * from jsp_member where id=#{id}	
+   </select>
+   
+   <select id="memberInfo" resultMap="member">
+   	select * from jsp_member
+   </select>
+   
+   <insert id="save">
+   		insert into jsp_member(id,pwd,name,addr) values(#{id},#{pwd},#{name},#{addr})
+   </insert>
+   
+   <update id="keepLogin">
+   		update jsp_member set session_id=#{sessionId},limit_time=#{limitDate} where id=#{id}
+   
+   </update>
+   <select id="getUserSessionId" resultMap="member">
+   		select * from jsp_member where session_id=#{sessionId}
+   </select>
+   
+   
+   
+   
+   </mapper>
